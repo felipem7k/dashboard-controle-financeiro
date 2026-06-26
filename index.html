@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard para controle financeiro pessoal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h1>Dashbord</h1>
+
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Transações</a></li>
+                <li><a href="#">Mensalidades</a></li>
+                <li><a href="#">Cartão</a></li>
+                <li><a href="#">Assinaturas</a></li>
+                <li><a href="#">Ajustes</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <header>
+            <h1>Dashboard Financeiro</h1>
+        </header>
+
+        <section class="cards">
+
+            <div class="card">
+                <h3>Saldo Atual</h3>
+                <p id="saldo">R$ 5.350,00</p>
+            </div>
+
+            <div class="card">
+                <h3>Receitas</h3>
+                <p>R$ 8.000,00</p>
+            </div>
+
+            <div class="card">
+                <h3>Despesas</h3>
+                <p>R$ 2.650,00</p>
+            </div>
+
+            <div class="card">
+                <h3>Economia</h3>
+                <p>67%</p>
+            </div>
+
+        </section>
+
+        <section class="charts">
+
+            <div class="chart-card">
+                <h3>Entradas x Saídas</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Gastos por Categoria</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
