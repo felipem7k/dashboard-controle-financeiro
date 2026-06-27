@@ -1,78 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard para controle financeiro pessoal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finanças — Controle Financeiro Pessoal</title>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="app">
 
     <aside class="sidebar">
-        <h1>Dashbord</h1>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <i class="fa-solid fa-chart-line"></i>
+        </span>
+        <span class="brand-name">Finanças</span>
+      </div>
 
-        <nav>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Transações</a></li>
-                <li><a href="#">Mensalidades</a></li>
-                <li><a href="#">Cartão</a></li>
-                <li><a href="#">Assinaturas</a></li>
-                <li><a href="#">Ajustes</a></li>
-            </ul>
-        </nav>
+      <nav class="nav" aria-label="Navegação principal">
+        <a class="nav-item" data-route="inicio" href="#inicio">
+          <i class="nav-icon fa-solid fa-house" aria-hidden="true"></i>
+          <span>Início</span>
+        </a>
+        <a class="nav-item" data-route="transacoes" href="#transacoes">
+          <i class="nav-icon fa-solid fa-right-left" aria-hidden="true"></i>
+          <span>Transações</span>
+        </a>
+        <a class="nav-item" data-route="mensalidades" href="#mensalidades">
+          <i class="nav-icon fa-solid fa-calendar-check" aria-hidden="true"></i>
+          <span>Mensalidades</span>
+        </a>
+        <a class="nav-item" data-route="cartao" href="#cartao">
+          <i class="nav-icon fa-solid fa-credit-card" aria-hidden="true"></i>
+          <span>Cartão</span>
+        </a>
+        <a class="nav-item" data-route="assinaturas" href="#assinaturas">
+          <i class="nav-icon fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+          <span>Assinaturas</span>
+        </a>
+        <a class="nav-item" data-route="ajustes" href="#ajustes">
+          <i class="nav-icon fa-solid fa-gear" aria-hidden="true"></i>
+          <span>Ajustes</span>
+        </a>
+      </nav>
+
+      <div class="profile">
+        <span class="avatar" aria-hidden="true">FM</span>
+        <div class="profile-info">
+          <span class="profile-name">Felipe Machado</span>
+          <span class="profile-mail">felipems3004@gmail.com</span>
+        </div>
+      </div>
     </aside>
 
-    <main class="content">
+    <main class="main">
+      <header class="topbar">
+        <h1 id="page-title">Início</h1>
+        <div class="topbar-actions">
+          <label class="search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" placeholder="Buscar..." aria-label="Buscar">
+          </label>
+          <button class="avatar avatar-btn" type="button" aria-label="Menu do usuário">FM</button>
+        </div>
+      </header>
 
-        <header>
-            <h1>Dashboard Financeiro</h1>
-        </header>
-
-        <section class="cards">
-
-            <div class="card">
-                <h3>Saldo Atual</h3>
-                <p id="saldo">R$ 5.350,00</p>
-            </div>
-
-            <div class="card">
-                <h3>Receitas</h3>
-                <p>R$ 8.000,00</p>
-            </div>
-
-            <div class="card">
-                <h3>Despesas</h3>
-                <p>R$ 2.650,00</p>
-            </div>
-
-            <div class="card">
-                <h3>Economia</h3>
-                <p>67%</p>
-            </div>
-
-        </section>
-
-        <section class="charts">
-
-            <div class="chart-card">
-                <h3>Entradas x Saídas</h3>
-                <canvas id="barChart"></canvas>
-            </div>
-
-            <div class="chart-card">
-                <h3>Gastos por Categoria</h3>
-                <canvas id="pieChart"></canvas>
-            </div>
-
-        </section>
-
+      <div id="content" class="content"></div>
     </main>
 
-    <script src="script.js"></script>
+  </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
