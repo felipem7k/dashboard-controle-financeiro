@@ -11,7 +11,13 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/topbar.css">
+  <link rel="stylesheet" href="css/inicio.css">
+  <link rel="stylesheet" href="css/transacoes.css">
+  <link rel="stylesheet" href="css/mensalidades.css">
+  <link rel="stylesheet" href="css/cartao.css">
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 </head>
@@ -166,23 +172,137 @@
         </section>
 
         <section class="page" id="page-transacoes">
-          <div class="placeholder">
-            <h2>Transações — em construção</h2>
-            <p>Histórico de entradas e saídas aparecerá aqui.</p>
+          <div class="tx-summary">
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-arrow-down-long"></i></span>
+                Entradas
+              </div>
+              <div class="kpi-value" id="tx-total-in">R$ 0,00</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-arrow-up-long"></i></span>
+                Saídas
+              </div>
+              <div class="kpi-value" id="tx-total-out">R$ 0,00</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+                Saldo
+              </div>
+              <div class="kpi-value" id="tx-balance">R$ 0,00</div>
+            </div>
+          </div>
+
+          <div class="tx-toolbar">
+            <div class="tx-tabs" id="tx-tabs">
+              <button class="tx-tab is-active" type="button" data-filter="todas">Todas</button>
+              <button class="tx-tab" type="button" data-filter="entrada">Entradas</button>
+              <button class="tx-tab" type="button" data-filter="saida">Saídas</button>
+            </div>
+            <label class="search tx-search">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="tx-search-input" placeholder="Buscar transação..." aria-label="Buscar transação">
+            </label>
+          </div>
+
+          <div class="tx-card">
+            <table class="tx-table">
+              <thead>
+                <tr>
+                  <th class="tx-col-icon"></th>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th class="tx-col-value">Valor</th>
+                </tr>
+              </thead>
+              <tbody id="tx-body"></tbody>
+            </table>
           </div>
         </section>
 
         <section class="page" id="page-mensalidades">
-          <div class="placeholder">
-            <h2>Mensalidades — em construção</h2>
-            <p>Suas contas recorrentes aparecerão aqui.</p>
+          <div class="mens-summary">
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-layer-group"></i></span>
+                Total mensal
+              </div>
+              <div class="kpi-value" id="mens-total">R$ 0,00</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-circle-check"></i></span>
+                Pago
+              </div>
+              <div class="kpi-value" id="mens-pago">R$ 0,00</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                A pagar
+              </div>
+              <div class="kpi-value" id="mens-apagar">R$ 0,00</div>
+            </div>
           </div>
+
+          <div class="mens-toolbar">
+            <div class="tx-tabs" id="mens-tabs">
+              <button class="tx-tab is-active" type="button" data-filter="todas">Todas</button>
+              <button class="tx-tab" type="button" data-filter="paga">Pagas</button>
+              <button class="tx-tab" type="button" data-filter="pendente">Pendentes</button>
+              <button class="tx-tab" type="button" data-filter="atrasada">Atrasadas</button>
+            </div>
+            <label class="search mens-search">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="mens-search-input" placeholder="Buscar conta..." aria-label="Buscar conta">
+            </label>
+          </div>
+
+          <div class="mens-grid" id="mens-grid"></div>
         </section>
 
         <section class="page" id="page-cartao">
-          <div class="placeholder">
-            <h2>Cartão — em construção</h2>
-            <p>Faturas e limites do cartão aparecerão aqui.</p>
+          <div class="card-selector" id="card-selector"></div>
+
+          <div class="card-kpis">
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+                Fatura atual
+              </div>
+              <div class="kpi-value" id="card-invoice-total">R$ 0,00</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-calendar-day"></i></span>
+                Vencimento
+              </div>
+              <div class="kpi-value" id="card-due">--</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-lock"></i></span>
+                Fechamento
+              </div>
+              <div class="kpi-value" id="card-close">--</div>
+            </div>
+          </div>
+
+          <div class="card-layout">
+            <div class="card-visual-col">
+              <div class="credit-card" id="credit-card"></div>
+              <div class="card-limit" id="card-limit"></div>
+            </div>
+
+            <div class="card-purchases">
+              <h3 class="card-title">Compras da fatura</h3>
+              <ul class="recent-list" id="card-purchases-list"></ul>
+            </div>
           </div>
         </section>
 
@@ -205,6 +325,6 @@
 
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

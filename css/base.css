@@ -1,0 +1,98 @@
+:root {
+  --primary: #0466c8;
+  --primary-soft: rgba(4, 102, 200, .12);
+  --secondary: #002855;
+  --bg:#0a0c10;
+  --surface:#13161c;
+  --surface-2:#1c212b;
+  --border:#252a35;
+  --text: #f4f6f8;
+  --text-muted: #8a8f98;
+  --up: #34d399;
+  --down: #f87171;
+  --radius: 14px;
+  --sidebar-w: 240px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.brand-name {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.content {
+  padding: 28px;
+  flex: 1;
+}
+
+.page {
+  display: none;
+}
+
+.page.is-visible {
+  display: block;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  min-height: 60vh;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.placeholder h2 {
+  font-size: 1.3rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.placeholder p {
+  font-size: .9rem;
+  max-width: 340px;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --sidebar-w: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
