@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="css/transacoes.css">
   <link rel="stylesheet" href="css/mensalidades.css">
   <link rel="stylesheet" href="css/cartao.css">
+  <link rel="stylesheet" href="css/assinaturas.css">
+  <link rel="stylesheet" href="css/ajustes.css">
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 </head>
@@ -307,16 +309,154 @@
         </section>
 
         <section class="page" id="page-assinaturas">
-          <div class="placeholder">
-            <h2>Assinaturas — em construção</h2>
-            <p>Serviços e renovações aparecerão aqui.</p>
+          <div class="assin-summary">
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-wallet"></i></span>
+                Total por mês
+              </div>
+              <div class="kpi-value" id="assin-total">R$ 0,00</div>
+              <div class="kpi-delta" id="assin-anual">R$ 0,00 por ano</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-calendar-day"></i></span>
+                Próxima renovação
+              </div>
+              <div class="kpi-value" id="assin-proxima">--</div>
+              <div class="kpi-delta" id="assin-proxima-data">--</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">
+                <span class="kpi-icon"><i class="fa-solid fa-crown"></i></span>
+                Mais cara
+              </div>
+              <div class="kpi-value" id="assin-cara">--</div>
+              <div class="kpi-delta" id="assin-cara-valor">--</div>
+            </div>
           </div>
+
+          <div class="assin-toolbar">
+            <div class="tx-tabs" id="assin-tabs">
+              <button class="tx-tab is-active" type="button" data-filter="todas">Todas</button>
+              <button class="tx-tab" type="button" data-filter="mensal">Mensais</button>
+              <button class="tx-tab" type="button" data-filter="anual">Anuais</button>
+            </div>
+            <label class="search assin-search">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="assin-search-input" placeholder="Buscar assinatura..." aria-label="Buscar assinatura">
+            </label>
+          </div>
+
+          <div class="assin-grid" id="assin-grid"></div>
         </section>
 
         <section class="page" id="page-ajustes">
-          <div class="placeholder">
-            <h2>Ajustes — em construção</h2>
-            <p>Preferências e configurações aparecerão aqui.</p>
+          <div class="settings-grid">
+          <div class="settings-card wide">
+            <div class="settings-head">
+              <div class="settings-title">Perfil</div>
+              <div class="settings-desc">Suas informações pessoais</div>
+            </div>
+            <div class="profile-edit">
+              <span class="profile-avatar">FM</span>
+              <div class="profile-fields">
+                <div class="settings-field">
+                  <label for="set-nome">Nome</label>
+                  <input class="settings-input" id="set-nome" type="text" value="Felipe Machado">
+                </div>
+                <div class="settings-field">
+                  <label for="set-email">E-mail</label>
+                  <input class="settings-input" id="set-email" type="email" value="felipems3004@gmail.com">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-head">
+              <div class="settings-title">Preferências</div>
+              <div class="settings-desc">Como o painel se comporta</div>
+            </div>
+            <div class="settings-rows">
+              <div class="settings-row">
+                <div class="settings-info">
+                  <div class="settings-label">Moeda</div>
+                </div>
+                <select class="settings-select">
+                  <option>Real (R$)</option>
+                  <option>Dólar (US$)</option>
+                  <option>Euro (€)</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <div class="settings-info">
+                  <div class="settings-label">Tema escuro</div>
+                  <div class="settings-sub">Aparência do painel</div>
+                </div>
+                <button class="toggle is-on" type="button" role="switch" aria-checked="true" aria-label="Tema escuro"></button>
+              </div>
+              <div class="settings-row">
+                <div class="settings-info">
+                  <div class="settings-label">Formato de data</div>
+                </div>
+                <select class="settings-select">
+                  <option>DD/MM/AAAA</option>
+                  <option>MM/DD/AAAA</option>
+                  <option>AAAA-MM-DD</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-head">
+              <div class="settings-title">Notificações</div>
+              <div class="settings-desc">O que você quer ser avisado</div>
+            </div>
+            <div class="settings-rows">
+              <div class="settings-row">
+                <div class="settings-info">
+                  <div class="settings-label">Vencimento de mensalidades</div>
+                </div>
+                <button class="toggle is-on" type="button" role="switch" aria-checked="true" aria-label="Vencimento de mensalidades"></button>
+              </div>
+              <div class="settings-row">
+                <div class="settings-info">
+                  <div class="settings-label">Renovação de assinaturas</div>
+                </div>
+                <button class="toggle" type="button" role="switch" aria-checked="false" aria-label="Renovação de assinaturas"></button>
+              </div>
+              <div class="settings-row">
+                <div class="settings-info">
+                  <div class="settings-label">Limite do cartão</div>
+                  <div class="settings-sub">Avisar ao passar de 80% do limite</div>
+                </div>
+                <button class="toggle is-on" type="button" role="switch" aria-checked="true" aria-label="Limite do cartão"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card danger wide">
+            <div class="settings-head">
+              <div class="settings-title danger">Zona de perigo</div>
+              <div class="settings-desc">Ações irreversíveis</div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-info">
+                <div class="settings-label">Exportar dados</div>
+                <div class="settings-sub">Baixar suas informações</div>
+              </div>
+              <button class="settings-btn" type="button">Exportar</button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-info">
+                <div class="settings-label">Limpar todos os dados</div>
+                <div class="settings-sub">Remove tudo permanentemente</div>
+              </div>
+              <button class="settings-btn danger" type="button">Limpar</button>
+            </div>
+          </div>
           </div>
         </section>
 

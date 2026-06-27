@@ -2,6 +2,8 @@ import { init as initInicio } from "./pages/inicio.js";
 import { init as initTransacoes } from "./pages/transacoes.js";
 import { init as initMensalidades } from "./pages/mensalidades.js";
 import { init as initCartao } from "./pages/cartao.js";
+import { init as initAssinaturas } from "./pages/assinaturas.js";
+import { init as initAjustes } from "./pages/ajustes.js";
 
 const routes = {
   inicio: {
@@ -21,10 +23,12 @@ const routes = {
     init: initCartao
   },
   assinaturas: {
-    title: "Assinaturas"
+    title: "Assinaturas",
+    init: initAssinaturas
   },
   ajustes: {
-    title: "Ajustes"
+    title: "Ajustes",
+    init: initAjustes
   },
 };
 
