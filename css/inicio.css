@@ -54,6 +54,18 @@
   color: var(--down);
 }
 
+.kpi-delta.muted {
+  color: var(--text-muted);
+}
+
+.recent-empty {
+  list-style: none;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .85rem;
+  padding: 24px 0;
+}
+
 .charts-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;

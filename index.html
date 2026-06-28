@@ -90,34 +90,34 @@
             <div class="kpi-card">
               <div class="kpi-label">
                 <span class="kpi-icon"><i class="fa-solid fa-wallet"></i></span>
-                Saldo Atual
+                Saldo do mês
               </div>
-              <div class="kpi-value">R$ 5.350,00</div>
-              <div class="kpi-delta up"><i class="fa-solid fa-arrow-up"></i> 12% vs. mês anterior</div>
+              <div class="kpi-value" id="kpi-saldo">R$ 0,00</div>
+              <div class="kpi-delta-slot" id="kpi-saldo-delta"></div>
             </div>
             <div class="kpi-card">
               <div class="kpi-label">
                 <span class="kpi-icon"><i class="fa-solid fa-arrow-down-long"></i></span>
                 Receitas
               </div>
-              <div class="kpi-value">R$ 8.000,00</div>
-              <div class="kpi-delta up"><i class="fa-solid fa-arrow-up"></i> 8% vs. mês anterior</div>
+              <div class="kpi-value" id="kpi-receitas">R$ 0,00</div>
+              <div class="kpi-delta-slot" id="kpi-receitas-delta"></div>
             </div>
             <div class="kpi-card">
               <div class="kpi-label">
                 <span class="kpi-icon"><i class="fa-solid fa-arrow-up-long"></i></span>
                 Despesas
               </div>
-              <div class="kpi-value">R$ 2.650,00</div>
-              <div class="kpi-delta down"><i class="fa-solid fa-arrow-up"></i> 5% vs. mês anterior</div>
+              <div class="kpi-value" id="kpi-despesas">R$ 0,00</div>
+              <div class="kpi-delta-slot" id="kpi-despesas-delta"></div>
             </div>
             <div class="kpi-card">
               <div class="kpi-label">
                 <span class="kpi-icon"><i class="fa-solid fa-piggy-bank"></i></span>
                 Economia
               </div>
-              <div class="kpi-value">67%</div>
-              <div class="kpi-delta up"><i class="fa-solid fa-arrow-up"></i> 3% vs. mês anterior</div>
+              <div class="kpi-value" id="kpi-economia">—</div>
+              <div class="kpi-delta-slot" id="kpi-economia-delta"></div>
             </div>
           </div>
 
@@ -135,40 +135,7 @@
 
               <div class="chart-card recent">
                 <h3 class="card-title">Transações recentes</h3>
-                <ul class="recent-list">
-                  <li class="recent-item">
-                    <span class="recent-icon up"><i class="fa-solid fa-arrow-down"></i></span>
-                    <div class="recent-info">
-                      <span class="recent-desc">Salário</span>
-                      <span class="recent-date">25 jun</span>
-                    </div>
-                    <span class="recent-value up">+ R$ 6.000,00</span>
-                  </li>
-                  <li class="recent-item">
-                    <span class="recent-icon down"><i class="fa-solid fa-arrow-up"></i></span>
-                    <div class="recent-info">
-                      <span class="recent-desc">Mercado</span>
-                      <span class="recent-date">24 jun</span>
-                    </div>
-                    <span class="recent-value down">- R$ 320,00</span>
-                  </li>
-                  <li class="recent-item">
-                    <span class="recent-icon down"><i class="fa-solid fa-arrow-up"></i></span>
-                    <div class="recent-info">
-                      <span class="recent-desc">Aluguel</span>
-                      <span class="recent-date">22 jun</span>
-                    </div>
-                    <span class="recent-value down">- R$ 1.200,00</span>
-                  </li>
-                  <li class="recent-item">
-                    <span class="recent-icon up"><i class="fa-solid fa-arrow-down"></i></span>
-                    <div class="recent-info">
-                      <span class="recent-desc">Freelance</span>
-                      <span class="recent-date">20 jun</span>
-                    </div>
-                    <span class="recent-value up">+ R$ 850,00</span>
-                  </li>
-                </ul>
+                <ul class="recent-list" id="recent-list"></ul>
               </div>
             </div>
           </div>
