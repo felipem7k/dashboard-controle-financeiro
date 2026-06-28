@@ -12,9 +12,27 @@
 .assin-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
   margin-bottom: 16px;
+}
+
+.assin-toolbar .assin-search {
+  margin-left: auto;
+}
+
+.assin-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .assin-search input {
@@ -28,10 +46,41 @@
 }
 
 .assin-card {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
+}
+
+.assin-del {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.assin-del:hover {
+  color: var(--down);
+  background: var(--surface-2);
+}
+
+.assin-pay {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: .78rem;
+  color: var(--text-muted);
+}
+
+.assin-pay i {
+  color: var(--primary);
 }
 
 .assin-top {
