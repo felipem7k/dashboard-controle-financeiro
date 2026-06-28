@@ -128,3 +128,13 @@
 .tx-radios input {
   width: auto;
 }
+
+.tx-credito {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tx-credito[hidden] {
+  display: none;
+}

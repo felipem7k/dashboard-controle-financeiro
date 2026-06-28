@@ -52,8 +52,7 @@ export function add(dados) {
     titular: dados.titular.trim(),
     limite: dados.limite,
     diaVencimento: dados.diaVencimento,
-    diaFechamento: dados.diaFechamento,
-    compras: []
+    diaFechamento: dados.diaFechamento
   };
   validar(cartao);
   lista.push(cartao);

@@ -1,16 +1,10 @@
 import { getAll, add, remove, subscribe } from "../store/cartoes.js";
+import { getAll as getTransacoes, subscribe as subscribeTransacoes } from "../store/transacoes.js";
 import { bandeiras, chavesBandeiras } from "../store/bandeiras.js";
+import { categorias } from "../store/categorias.js";
 import { formatar, lerValor } from "../utils/moeda.js";
+import { formatarData } from "../utils/datas.js";
 import { abrirModal } from "../ui/modal.js";
-
-const iconesCategoria = {
-  Alimentação: "fa-cart-shopping",
-  Transporte: "fa-car",
-  Lazer: "fa-film",
-  Compras: "fa-bag-shopping",
-  Streaming: "fa-tv",
-  Outros: "fa-receipt"
-};
 
 let ativo = null;
 
@@ -18,8 +12,12 @@ function iconeBandeira(chave) {
   return bandeiras[chave] ? bandeiras[chave].icon : "fa-credit-card";
 }
 
+function comprasDoCartao(cartaoId) {
+  return getTransacoes().filter(tx => tx.metodo === "credito" && tx.cartaoId === cartaoId);
+}
+
 function totalFatura(cartao) {
-  return cartao.compras.reduce((soma, c) => soma + c.valor, 0);
+  return comprasDoCartao(cartao.id).reduce((soma, tx) => soma + tx.valor, 0);
 }
 
 function cartaoAtivo() {
@@ -98,22 +96,26 @@ function renderFatura(cartao) {
 
 function renderCompras(cartao) {
   const alvo = document.getElementById("card-purchases-list");
+  const compras = comprasDoCartao(cartao.id);
 
-  if (cartao.compras.length === 0) {
+  if (compras.length === 0) {
     alvo.innerHTML = `<li class="card-empty">Nenhuma compra nesta fatura.</li>`;
     return;
   }
 
-  alvo.innerHTML = cartao.compras
-    .map(compra => {
-      const icone = iconesCategoria[compra.categoria] || "fa-receipt";
+  alvo.innerHTML = compras
+    .map(tx => {
+      const icone = categorias[tx.categoria] || "fa-receipt";
+      const parcelado = tx.parcelas > 1
+        ? ` · R$ ${formatar(tx.valor / tx.parcelas)} x${tx.parcelas}`
+        : "";
       return `<li class="recent-item">
         <span class="recent-icon down"><i class="fa-solid ${icone}"></i></span>
         <div class="recent-info">
-          <span class="recent-desc">${compra.desc}</span>
-          <span class="recent-date">${compra.categoria} · ${compra.data}</span>
+          <span class="recent-desc">${tx.desc}</span>
+          <span class="recent-date">${tx.categoria} · ${formatarData(tx.data)}${parcelado}</span>
         </div>
-        <span class="recent-value down">- R$ ${formatar(compra.valor)}</span>
+        <span class="recent-value down">- R$ ${formatar(tx.valor)}</span>
       </li>`;
     })
     .join("");
@@ -229,6 +231,7 @@ export function init() {
   });
 
   subscribe(render);
+  subscribeTransacoes(render);
 
   render();
 }

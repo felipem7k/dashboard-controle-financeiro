@@ -1,5 +1,7 @@
 import { load, save } from "./storage.js";
 import { nomesCategorias } from "./categorias.js";
+import { chavesMetodos } from "./metodos.js";
+import { getAll as getCartoes } from "./cartoes.js";
 
 const CHAVE = "financas:transacoes";
 
@@ -31,20 +33,47 @@ function validar(dados) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dados.data)) {
     throw new Error("Data inválida.");
   }
+  if (!chavesMetodos().includes(dados.metodo)) {
+    throw new Error("Método de pagamento inválido.");
+  }
+  if (dados.metodo === "credito") {
+    if (!dados.cartaoId) {
+      throw new Error("Selecione um cartão.");
+    }
+    if (!getCartoes().some(c => c.id === dados.cartaoId)) {
+      throw new Error("Cartão inválido.");
+    }
+    if (!Number.isInteger(dados.parcelas) || dados.parcelas < 1 || dados.parcelas > 24) {
+      throw new Error("Parcelas deve ser entre 1 e 24.");
+    }
+  }
+}
+
+function normalizar(tx) {
+  return {
+    metodo: "dinheiro",
+    cartaoId: null,
+    parcelas: 1,
+    ...tx
+  };
 }
 
 export function getAll() {
-  return ordenar(lista);
+  return ordenar(lista).map(normalizar);
 }
 
 export function add(dados) {
+  const credito = dados.metodo === "credito";
   const tx = {
     id: "tx_" + Date.now(),
     desc: dados.desc.trim(),
     categoria: dados.categoria,
     data: dados.data,
     tipo: dados.tipo,
-    valor: dados.valor
+    valor: dados.valor,
+    metodo: dados.metodo,
+    cartaoId: credito ? dados.cartaoId : null,
+    parcelas: credito ? dados.parcelas : 1
   };
   validar(tx);
   lista.push(tx);

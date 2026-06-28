@@ -5,6 +5,17 @@
   margin-bottom: 16px;
 }
 
+.tx-metodo {
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: .85rem;
+}
+
+.tx-metodo i {
+  margin-right: 6px;
+  color: var(--primary);
+}
+
 .tx-actions {
   text-align: right;
 }
