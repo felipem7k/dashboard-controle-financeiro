@@ -1,16 +1,11 @@
-import { getAll, subscribe } from "../store/transacoes.js";
-import { categorias } from "../store/categorias.js";
-import { formatarData } from "../utils/datas.js";
+import { getAll, add, subscribe } from "../store/transacoes.js";
+import { categorias, nomesCategorias } from "../store/categorias.js";
+import { formatarData, hoje } from "../utils/datas.js";
+import { formatar, lerValor } from "../utils/moeda.js";
+import { abrirModal } from "../ui/modal.js";
 
 let filtroTipo = "todas";
 let busca = "";
-
-function formatar(valor) {
-  return valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-}
 
 function filtrar() {
   const termo = busca.trim().toLowerCase();
@@ -63,6 +58,57 @@ function render() {
   atualizarResumo(lista);
 }
 
+function montarForm() {
+  const opcoes = nomesCategorias()
+    .map(nome => `<option value="${nome}">${nome}</option>`)
+    .join("");
+
+  const form = document.createElement("form");
+  form.className = "tx-form";
+  form.innerHTML = `
+    <label class="tx-field">
+      <span>Descrição</span>
+      <input name="desc" type="text" autocomplete="off">
+    </label>
+    <label class="tx-field">
+      <span>Valor (R$)</span>
+      <input name="valor" type="text" inputmode="decimal" autocomplete="off">
+    </label>
+    <div class="tx-field">
+      <span>Tipo</span>
+      <div class="tx-radios">
+        <label><input name="tipo" type="radio" value="entrada" checked> Entrada</label>
+        <label><input name="tipo" type="radio" value="saida"> Saída</label>
+      </div>
+    </div>
+    <label class="tx-field">
+      <span>Categoria</span>
+      <select name="categoria">${opcoes}</select>
+    </label>
+    <label class="tx-field">
+      <span>Data</span>
+      <input name="data" type="date" value="${hoje()}">
+    </label>`;
+  return form;
+}
+
+function abrirNova() {
+  const form = montarForm();
+  abrirModal({
+    titulo: "Nova transação",
+    conteudo: form,
+    onConfirmar: () => {
+      add({
+        desc: form.desc.value,
+        valor: lerValor(form.valor.value),
+        tipo: form.tipo.value,
+        categoria: form.categoria.value,
+        data: form.data.value
+      });
+    }
+  });
+}
+
 export function init() {
   document.getElementById("tx-tabs").addEventListener("click", e => {
     const botao = e.target.closest(".tx-tab");
@@ -80,6 +126,8 @@ export function init() {
     busca = e.target.value;
     render();
   });
+
+  document.getElementById("tx-add-btn").addEventListener("click", abrirNova);
 
   subscribe(render);
 
