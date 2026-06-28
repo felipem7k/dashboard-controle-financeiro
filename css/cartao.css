@@ -48,6 +48,20 @@
   outline-offset: 2px;
 }
 
+.card-chip-add {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+.card-chip-add:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.card-chip-add i {
+  font-size: 1rem;
+}
+
 .card-kpis {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -68,6 +82,7 @@
 }
 
 .credit-card {
+  position: relative;
   aspect-ratio: 1.6 / 1;
   border-radius: 16px;
   padding: 22px;
@@ -76,6 +91,24 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.cc-del {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: .7;
+}
+
+.cc-del:hover {
+  opacity: 1;
 }
 
 .cc-top {
@@ -167,6 +200,21 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
+}
+
+.card-empty {
+  list-style: none;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .85rem;
+  padding: 18px 0;
+}
+
+.cc-vazio {
+  margin: auto;
+  text-align: center;
+  font-size: .9rem;
+  opacity: .85;
 }
 
 @media (max-width: 860px) {

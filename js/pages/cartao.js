@@ -1,3 +1,8 @@
+import { getAll, add, remove, subscribe } from "../store/cartoes.js";
+import { bandeiras, chavesBandeiras } from "../store/bandeiras.js";
+import { formatar, lerValor } from "../utils/moeda.js";
+import { abrirModal } from "../ui/modal.js";
+
 const iconesCategoria = {
   Alimentação: "fa-cart-shopping",
   Transporte: "fa-car",
@@ -7,125 +12,38 @@ const iconesCategoria = {
   Outros: "fa-receipt"
 };
 
-const cartoes = [
-  {
-    id: "nubank",
-    nome: "Nubank",
-    bandeira: "fa-cc-mastercard",
-    final: "1234",
-    titular: "Felipe Machado",
-    limite: 5000,
-    vencimento: "10/jul",
-    fechamento: "03/jul",
-    compras: [
-      {
-        desc: "Mercado",
-        categoria: "Alimentação",
-        data: "24 jun",
-        valor: 320
-      },
-      {
-        desc: "Uber",
-        categoria: "Transporte",
-        data: "22 jun",
-        valor: 45
-      },
-      {
-        desc: "Amazon",
-        categoria: "Compras",
-        data: "20 jun",
-        valor: 189.9
-      },
-      {
-        desc: "Spotify",
-        categoria: "Streaming",
-        data: "18 jun",
-        valor: 21.9
-      },
-      {
-        desc: "Restaurante",
-        categoria: "Alimentação",
-        data: "15 jun",
-        valor: 130
-      }
-    ]
-  },
-  {
-    id: "inter",
-    nome: "Inter",
-    bandeira: "fa-cc-visa",
-    final: "5678",
-    titular: "Felipe Machado",
-    limite: 3000,
-    vencimento: "15/jul",
-    fechamento: "08/jul",
-    compras: [
-      {
-        desc: "Posto Shell",
-        categoria: "Transporte",
-        data: "23 jun",
-        valor: 240
-      },
-      {
-        desc: "Cinema",
-        categoria: "Lazer",
-        data: "21 jun",
-        valor: 60
-      },
-      {
-        desc: "Farmácia",
-        categoria: "Outros",
-        data: "17 jun",
-        valor: 78.5
-      }
-    ]
-  },
-  {
-    id: "c6",
-    nome: "C6 Bank",
-    bandeira: "fa-cc-mastercard",
-    final: "9012",
-    titular: "Felipe Machado",
-    limite: 8000,
-    vencimento: "20/jul",
-    fechamento: "13/jul",
-    compras: [
-      {
-        desc: "Notebook",
-        categoria: "Compras",
-        data: "19 jun",
-        valor: 3200
-      },
-      {
-        desc: "iFood",
-        categoria: "Alimentação",
-        data: "16 jun",
-        valor: 54.9
-      }
-    ]
-  }
-];
+let ativo = null;
 
-let ativo = cartoes[0].id;
-
-function formatar(valor) {
-  return valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+function iconeBandeira(chave) {
+  return bandeiras[chave] ? bandeiras[chave].icon : "fa-credit-card";
 }
 
 function totalFatura(cartao) {
   return cartao.compras.reduce((soma, c) => soma + c.valor, 0);
 }
 
+function cartaoAtivo() {
+  const lista = getAll();
+  if (lista.length === 0) return null;
+  const achado = lista.find(c => c.id === ativo);
+  return achado || lista[0];
+}
+
+function botaoNovo() {
+  return `<button class="card-chip card-chip-add" type="button" id="card-add-btn">
+    <i class="fa-solid fa-plus"></i>
+    <span class="card-chip-name">Novo cartão</span>
+  </button>`;
+}
+
 function renderSeletor() {
   const alvo = document.getElementById("card-selector");
-  alvo.innerHTML = cartoes
+  const lista = getAll();
+  const chips = lista
     .map(cartao => {
       const classe = cartao.id === ativo ? "card-chip is-active" : "card-chip";
       return `<button class="${classe}" type="button" data-id="${cartao.id}">
-        <i class="card-chip-icon fa-brands ${cartao.bandeira}"></i>
+        <i class="card-chip-icon fa-brands ${iconeBandeira(cartao.bandeira)}"></i>
         <span>
           <span class="card-chip-name">${cartao.nome}</span>
           <span class="card-chip-last"> •••• ${cartao.final}</span>
@@ -133,10 +51,14 @@ function renderSeletor() {
       </button>`;
     })
     .join("");
+  alvo.innerHTML = chips + botaoNovo();
 }
 
 function renderCartao(cartao) {
   document.getElementById("credit-card").innerHTML = `
+    <button class="cc-del" type="button" data-remove="${cartao.id}" aria-label="Remover cartão">
+      <i class="fa-solid fa-trash"></i>
+    </button>
     <div class="cc-top">
       <span class="cc-brand">${cartao.nome}</span>
       <span class="cc-chip"></span>
@@ -147,7 +69,7 @@ function renderCartao(cartao) {
         <div class="cc-label">Titular</div>
         <div class="cc-name">${cartao.titular}</div>
       </div>
-      <span class="cc-flag"><i class="fa-brands ${cartao.bandeira}"></i></span>
+      <span class="cc-flag"><i class="fa-brands ${iconeBandeira(cartao.bandeira)}"></i></span>
     </div>`;
 }
 
@@ -170,12 +92,18 @@ function renderLimite(cartao) {
 
 function renderFatura(cartao) {
   document.getElementById("card-invoice-total").textContent = "R$ " + formatar(totalFatura(cartao));
-  document.getElementById("card-due").textContent = cartao.vencimento;
-  document.getElementById("card-close").textContent = cartao.fechamento;
+  document.getElementById("card-due").textContent = "dia " + cartao.diaVencimento;
+  document.getElementById("card-close").textContent = "dia " + cartao.diaFechamento;
 }
 
 function renderCompras(cartao) {
   const alvo = document.getElementById("card-purchases-list");
+
+  if (cartao.compras.length === 0) {
+    alvo.innerHTML = `<li class="card-empty">Nenhuma compra nesta fatura.</li>`;
+    return;
+  }
+
   alvo.innerHTML = cartao.compras
     .map(compra => {
       const icone = iconesCategoria[compra.categoria] || "fa-receipt";
@@ -191,8 +119,27 @@ function renderCompras(cartao) {
     .join("");
 }
 
+function renderVazio() {
+  document.getElementById("card-selector").innerHTML = botaoNovo();
+  document.getElementById("credit-card").innerHTML = `
+    <div class="cc-vazio">Nenhum cartão cadastrado.</div>`;
+  document.getElementById("card-limit").innerHTML = "";
+  document.getElementById("card-invoice-total").textContent = "R$ 0,00";
+  document.getElementById("card-due").textContent = "--";
+  document.getElementById("card-close").textContent = "--";
+  document.getElementById("card-purchases-list").innerHTML =
+    `<li class="card-empty">Adicione um cartão para começar.</li>`;
+}
+
 function render() {
-  const cartao = cartoes.find(c => c.id === ativo);
+  const cartao = cartaoAtivo();
+
+  if (!cartao) {
+    renderVazio();
+    return;
+  }
+
+  ativo = cartao.id;
   renderSeletor();
   renderCartao(cartao);
   renderLimite(cartao);
@@ -200,14 +147,88 @@ function render() {
   renderCompras(cartao);
 }
 
+function montarForm() {
+  const opcoes = chavesBandeiras()
+    .map(chave => `<option value="${chave}">${bandeiras[chave].nome}</option>`)
+    .join("");
+
+  const form = document.createElement("form");
+  form.className = "tx-form";
+  form.innerHTML = `
+    <label class="tx-field">
+      <span>Nome do cartão</span>
+      <input name="nome" type="text" autocomplete="off">
+    </label>
+    <label class="tx-field">
+      <span>Titular</span>
+      <input name="titular" type="text" autocomplete="off">
+    </label>
+    <label class="tx-field">
+      <span>Bandeira</span>
+      <select name="bandeira">${opcoes}</select>
+    </label>
+    <label class="tx-field">
+      <span>Final (4 dígitos)</span>
+      <input name="final" type="text" inputmode="numeric" maxlength="4" autocomplete="off">
+    </label>
+    <label class="tx-field">
+      <span>Limite (R$)</span>
+      <input name="limite" type="text" inputmode="decimal" autocomplete="off">
+    </label>
+    <label class="tx-field">
+      <span>Dia de vencimento (1-31)</span>
+      <input name="diaVencimento" type="number" min="1" max="31">
+    </label>
+    <label class="tx-field">
+      <span>Dia de fechamento (1-31)</span>
+      <input name="diaFechamento" type="number" min="1" max="31">
+    </label>`;
+  return form;
+}
+
+function abrirNovo() {
+  const form = montarForm();
+  abrirModal({
+    titulo: "Novo cartão",
+    conteudo: form,
+    onConfirmar: () => {
+      const criado = add({
+        nome: form.nome.value,
+        titular: form.titular.value,
+        bandeira: form.bandeira.value,
+        final: form.final.value,
+        limite: lerValor(form.limite.value),
+        diaVencimento: parseInt(form.diaVencimento.value, 10),
+        diaFechamento: parseInt(form.diaFechamento.value, 10)
+      });
+      ativo = criado.id;
+    }
+  });
+}
+
 export function init() {
   document.getElementById("card-selector").addEventListener("click", e => {
+    if (e.target.closest("#card-add-btn")) {
+      abrirNovo();
+      return;
+    }
+
     const chip = e.target.closest(".card-chip");
     if (!chip) return;
 
     ativo = chip.dataset.id;
     render();
   });
+
+  document.getElementById("credit-card").addEventListener("click", e => {
+    const botao = e.target.closest(".cc-del");
+    if (!botao) return;
+    if (confirm("Remover este cartão?")) {
+      remove(botao.dataset.remove);
+    }
+  });
+
+  subscribe(render);
 
   render();
 }
