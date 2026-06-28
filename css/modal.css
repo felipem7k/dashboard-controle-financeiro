@@ -138,3 +138,10 @@
 .tx-credito[hidden] {
   display: none;
 }
+
+.mens-pay-valor {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+}
