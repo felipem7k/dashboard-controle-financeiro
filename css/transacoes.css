@@ -5,6 +5,24 @@
   margin-bottom: 16px;
 }
 
+.tx-actions {
+  text-align: right;
+}
+
+.tx-del {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.tx-del:hover {
+  color: var(--down);
+  background: var(--surface-2);
+}
+
 .tx-toolbar {
   display: flex;
   align-items: center;

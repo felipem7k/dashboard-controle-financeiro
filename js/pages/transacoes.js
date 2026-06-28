@@ -1,4 +1,4 @@
-import { getAll, add, subscribe } from "../store/transacoes.js";
+import { getAll, add, remove, subscribe } from "../store/transacoes.js";
 import { categorias, nomesCategorias } from "../store/categorias.js";
 import { formatarData, hoje } from "../utils/datas.js";
 import { formatar, lerValor } from "../utils/moeda.js";
@@ -42,6 +42,11 @@ function linha(tx) {
     <td class="tx-date">${formatarData(tx.data)}</td>
     <td><span class="tx-badge ${dir}">${badge}</span></td>
     <td class="tx-value ${dir}">${sinal} R$ ${formatar(tx.valor)}</td>
+    <td class="tx-actions">
+      <button class="tx-del" type="button" data-remove="${tx.id}" aria-label="Remover">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </td>
   </tr>`;
 }
 
@@ -50,7 +55,7 @@ function render() {
   const body = document.getElementById("tx-body");
 
   if (lista.length === 0) {
-    body.innerHTML = `<tr><td class="tx-empty" colspan="6">Nenhuma transação encontrada.</td></tr>`;
+    body.innerHTML = `<tr><td class="tx-empty" colspan="7">Nenhuma transação encontrada.</td></tr>`;
   } else {
     body.innerHTML = lista.map(linha).join("");
   }
@@ -128,6 +133,14 @@ export function init() {
   });
 
   document.getElementById("tx-add-btn").addEventListener("click", abrirNova);
+
+  document.getElementById("tx-body").addEventListener("click", e => {
+    const botao = e.target.closest(".tx-del");
+    if (!botao) return;
+    if (confirm("Remover esta transação?")) {
+      remove(botao.dataset.remove);
+    }
+  });
 
   subscribe(render);
 
