@@ -4,6 +4,7 @@ import { init as initMensalidades } from "./pages/mensalidades.js";
 import { init as initCartao } from "./pages/cartao.js";
 import { init as initAssinaturas } from "./pages/assinaturas.js";
 import { init as initAjustes } from "./pages/ajustes.js";
+import { aplicarPerfil } from "./ui/perfil.js";
 
 const routes = {
   inicio: {
@@ -66,4 +67,5 @@ items.forEach(item => {
   });
 });
 
+aplicarPerfil();
 navigate(location.hash.replace("#", "") || "inicio");

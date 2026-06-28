@@ -63,10 +63,10 @@
       </nav>
 
       <div class="profile">
-        <span class="avatar" aria-hidden="true">FM</span>
+        <span class="avatar" id="side-avatar" aria-hidden="true">FM</span>
         <div class="profile-info">
-          <span class="profile-name">Felipe Machado</span>
-          <span class="profile-mail">felipems3004@gmail.com</span>
+          <span class="profile-name" id="side-nome">Felipe Machado</span>
+          <span class="profile-mail" id="side-mail">felipems3004@gmail.com</span>
         </div>
       </div>
     </aside>
@@ -79,7 +79,7 @@
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <input type="search" placeholder="Buscar..." aria-label="Buscar">
           </label>
-          <button class="avatar avatar-btn" type="button" aria-label="Menu do usuário">FM</button>
+          <button class="avatar avatar-btn" id="top-avatar" type="button" aria-label="Menu do usuário">FM</button>
         </div>
       </header>
 
@@ -341,16 +341,17 @@
               <div class="settings-desc">Suas informações pessoais</div>
             </div>
             <div class="profile-edit">
-              <span class="profile-avatar">FM</span>
+              <span class="profile-avatar" id="perfil-avatar">FM</span>
               <div class="profile-fields">
                 <div class="settings-field">
                   <label for="set-nome">Nome</label>
-                  <input class="settings-input" id="set-nome" type="text" value="Felipe Machado">
+                  <input class="settings-input" id="set-nome" type="text" placeholder="Seu nome">
                 </div>
                 <div class="settings-field">
                   <label for="set-email">E-mail</label>
-                  <input class="settings-input" id="set-email" type="email" value="felipems3004@gmail.com">
+                  <input class="settings-input" id="set-email" type="email" placeholder="seu@email.com">
                 </div>
+                <button class="settings-btn" type="button" id="btn-salvar-perfil">Salvar perfil</button>
               </div>
             </div>
           </div>
@@ -365,7 +366,7 @@
                 <div class="settings-info">
                   <div class="settings-label">Moeda</div>
                 </div>
-                <select class="settings-select">
+                <select class="settings-select" data-pref="moeda">
                   <option>Real (R$)</option>
                   <option>Dólar (US$)</option>
                   <option>Euro (€)</option>
@@ -382,7 +383,7 @@
                 <div class="settings-info">
                   <div class="settings-label">Formato de data</div>
                 </div>
-                <select class="settings-select">
+                <select class="settings-select" data-pref="formatoData">
                   <option>DD/MM/AAAA</option>
                   <option>MM/DD/AAAA</option>
                   <option>AAAA-MM-DD</option>
@@ -429,14 +430,14 @@
                 <div class="settings-label">Exportar dados</div>
                 <div class="settings-sub">Baixar suas informações</div>
               </div>
-              <button class="settings-btn" type="button">Exportar</button>
+              <button class="settings-btn" type="button" id="btn-exportar">Exportar</button>
             </div>
             <div class="settings-row">
               <div class="settings-info">
                 <div class="settings-label">Limpar todos os dados</div>
                 <div class="settings-sub">Remove tudo permanentemente</div>
               </div>
-              <button class="settings-btn danger" type="button">Limpar</button>
+              <button class="settings-btn danger" type="button" id="btn-limpar">Limpar</button>
             </div>
           </div>
           </div>
