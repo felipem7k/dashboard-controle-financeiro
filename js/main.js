@@ -58,12 +58,35 @@ function navigate(route) {
   }
 }
 
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("sidebar-overlay");
+const menuToggle = document.getElementById("menu-toggle");
+
+function abrirMenu() {
+  sidebar.classList.add("is-open");
+  overlay.classList.add("is-open");
+  menuToggle.setAttribute("aria-expanded", "true");
+}
+
+function fecharMenu() {
+  sidebar.classList.remove("is-open");
+  overlay.classList.remove("is-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+}
+
+menuToggle.addEventListener("click", abrirMenu);
+overlay.addEventListener("click", fecharMenu);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") fecharMenu();
+});
+
 items.forEach(item => {
   item.addEventListener("click", e => {
     e.preventDefault();
     const route = item.dataset.route;
     history.replaceState(null, "", "#" + route);
     navigate(route);
+    fecharMenu();
   });
 });
 

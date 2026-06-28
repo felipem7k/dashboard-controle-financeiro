@@ -33,6 +33,16 @@
   font-family: inherit;
   font-size: 0.9rem;
   cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+
+.assin-add-btn:hover {
+  background: #0353a4;
+  transform: translateY(-1px);
+}
+
+.assin-add-btn:active {
+  transform: translateY(0);
 }
 
 .assin-search input {

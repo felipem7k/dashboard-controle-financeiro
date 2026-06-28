@@ -86,8 +86,23 @@ h3,
 }
 
 @media (max-width: 860px) {
-  :root {
-    --sidebar-w: 64px;
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .kpi-grid,
+  .card-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    padding: 14px;
   }
 }
 

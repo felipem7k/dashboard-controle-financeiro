@@ -58,6 +58,16 @@
   font-family: inherit;
   font-size: 0.9rem;
   cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+
+.tx-add-btn:hover {
+  background: #0353a4;
+  transform: translateY(-1px);
+}
+
+.tx-add-btn:active {
+  transform: translateY(0);
 }
 
 .tx-tabs {
@@ -222,7 +232,15 @@
     align-items: stretch;
   }
 
+  .tx-toolbar .tx-search {
+    margin-left: 0;
+  }
+
   .tx-search input {
     width: 100%;
+  }
+
+  .tx-table {
+    min-width: 640px;
   }
 }
